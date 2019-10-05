@@ -43,4 +43,4 @@ const Logo = props => (
     </svg>
 );
 
-export default Logo;
+//export default Logo;

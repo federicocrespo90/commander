@@ -27,6 +27,7 @@ class Basket extends Component {
             record: { basket },
             crudGetMany,
         } = this.props;
+        console.log(basket)
         crudGetMany('products', basket.map(item => item.product_id));
     }
     render() {

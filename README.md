@@ -2,7 +2,7 @@
 
 This is a demo of the [react-admin](https://github.com/marmelab/react-admin) library for React.js. It creates a working administration for a fake poster shop named Posters Galore. You can test it online at http://marmelab.com/react-admin-demo.
 
-* Developed using node `v9.11.1`
+* Tested using node `v9.11.1`
 
 ### Dependencies
 - NodeJS

@@ -1,59 +1,23 @@
+
 import React from 'react';
-import {
-    translate,
-    Filter,
-    List,
-    NumberInput,
-    ReferenceInput,
-    SearchInput,
-    SelectInput,
-} from 'react-admin';
-import Chip from '@material-ui/core/Chip';
-import withStyles from '@material-ui/core/styles/withStyles';
-import GridList from './GridList';
+import { List, Datagrid, TextField, ReferenceField } from 'react-admin';
 
-const quickFilterStyles = {
-    root: {
-        marginBottom: '0.7em',
-    },
-};
 
-const QuickFilter = translate(
-    withStyles(quickFilterStyles)(({ classes, label, translate }) => (
-        <Chip className={classes.root} label={translate(label)} />
-    ))
-);
 
-export const ProductFilter = props => (
-    <Filter {...props}>
-        <SearchInput source="q" alwaysOn />
-        <ReferenceInput
-            source="category_id"
-            reference="categories"
-            sort={{ field: 'id', order: 'ASC' }}
-        >
-            <SelectInput source="name" />
-        </ReferenceInput>
-        <NumberInput source="width_gte" />
-        <NumberInput source="width_lte" />
-        <NumberInput source="height_gte" />
-        <NumberInput source="height_lte" />
-        <QuickFilter
-            label="resources.products.fields.stock_lte"
-            source="stock_lte"
-            defaultValue={10}
-        />
-    </Filter>
-);
-
-const ProductList = props => (
-    <List
-        {...props}
-        filters={<ProductFilter />}
-        perPage={20}
-        sort={{ field: 'id', order: 'ASC' }}
-    >
-        <GridList />
+export const ProductList = props => (
+    <List {...props}>
+        <Datagrid rowClick="edit">
+            <ReferenceField source="id" reference="products">
+                <TextField source="id" />
+            </ReferenceField>
+            <TextField source="createdDate" label="Created AT" />
+            <TextField source="attributes.name" label="NAME" />
+            <TextField source="attributes.description" label="DESCRIPTION" />
+            <TextField source="attributes.sku" label="SKU" />
+            <TextField source="attributes.width" label="WIDTH" />
+            <TextField source="attributes.height" label="HEIGHT" />
+            <TextField source="attributes.length" label="LENGTH" />
+        </Datagrid>
     </List>
 );
 

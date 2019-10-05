@@ -3,14 +3,11 @@ import {
     Create,
     FormTab,
     NumberInput,
-    ReferenceInput,
-    SelectInput,
     TabbedForm,
     TextInput,
     required,
 } from 'react-admin';
 import withStyles from '@material-ui/core/styles/withStyles';
-import RichTextInput from 'ra-input-rich-text';
 
 export const styles = {
     stock: { width: '5em' },
@@ -24,56 +21,42 @@ export const styles = {
 const ProductCreate = ({ classes, ...props }) => (
     <Create {...props}>
         <TabbedForm>
-            <FormTab label="resources.products.tabs.image">
+            <FormTab label="attributes">
                 <TextInput
                     autoFocus
-                    source="image"
+                    source="attributes.name"
+                    label="Name"
                     options={{ fullWidth: true }}
                     validate={required()}
                 />
                 <TextInput
-                    source="thumbnail"
+                    source="attributes.description"
                     options={{ fullWidth: true }}
                     validate={required()}
-                />
-            </FormTab>
-            <FormTab label="resources.products.tabs.details" path="details">
-                <TextInput source="reference" validate={required()} />
-                <NumberInput
-                    source="price"
-                    validate={required()}
-                    className={classes.price}
+                    label="Description"
                 />
                 <NumberInput
-                    source="width"
-                    validate={required()}
+                    source="attributes.width"
+                    label="Width"
                     className={classes.width}
                     formClassName={classes.widthFormGroup}
+                    validate={required()}
                 />
                 <NumberInput
-                    source="height"
-                    validate={required()}
+                    source="attributes.height"
+                    label="Height"
                     className={classes.height}
                     formClassName={classes.heightFormGroup}
-                />
-                <ReferenceInput
-                    source="category_id"
-                    reference="categories"
-                    allowEmpty
-                >
-                    <SelectInput source="name" />
-                </ReferenceInput>
-                <NumberInput
-                    source="stock"
                     validate={required()}
-                    className={classes.stock}
                 />
-            </FormTab>
-            <FormTab
-                label="resources.products.tabs.description"
-                path="description"
-            >
-                <RichTextInput source="description" addLabel={false} />
+
+                <NumberInput
+                    source="attributes.length"
+                    label="Length"
+                    className={classes.height}
+                    formClassName={classes.heightFormGroup}
+                    validate={required()}
+                />
             </FormTab>
         </TabbedForm>
     </Create>

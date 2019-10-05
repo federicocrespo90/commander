@@ -8,8 +8,8 @@ export const lightTheme = {
     palette: {
         secondary: {
             light: '#5f5fc4',
-            main: '#283593',
-            dark: '#001064',
+            main: 'rgba(40, 53, 147, .72)',
+            dark: 'rgba(40, 53, 147, .72)',
             contrastText: '#fff',
         },
     },

@@ -7,7 +7,7 @@ export default (type, params) => {
         /**
         * @Post /login
         */
-        const LOGIN_ENDPOINT = 'https://core.dev.oneboelter.com/login';
+        const LOGIN_ENDPOINT = 'http://localhost:9000/login';
         axios({
             method: 'post',
             url: LOGIN_ENDPOINT,
@@ -17,6 +17,7 @@ export default (type, params) => {
             }
         })
         .then((res) => {
+            console.log(res)
             if (
                 res.status === 200 &&
                 res.data.accessToken &&
@@ -42,8 +43,9 @@ export default (type, params) => {
     }
     if (type === AUTH_LOGOUT) {
         localStorage.removeItem('username');
-        localStorage.removeItem('username');
-        localStorage.removeItem('username');
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('token_type');
+        localStorage.removeItem('expire_at');
         return Promise.resolve();
     }
     if (type === AUTH_ERROR) {

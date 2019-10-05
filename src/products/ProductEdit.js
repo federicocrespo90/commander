@@ -1,28 +1,17 @@
 import React from 'react';
 import {
-    Datagrid,
-    DateField,
     Edit,
-    EditButton,
     FormTab,
     NumberInput,
-    Pagination,
-    ReferenceInput,
-    ReferenceManyField,
-    SelectInput,
     TabbedForm,
-    TextField,
     TextInput,
+    required
 } from 'react-admin';
 import withStyles from '@material-ui/core/styles/withStyles';
-import RichTextInput from 'ra-input-rich-text';
 
-import CustomerReferenceField from '../visitors/CustomerReferenceField';
-import StarRatingField from '../reviews/StarRatingField';
-import Poster from './Poster';
 import { styles as createStyles } from './ProductCreate';
 
-const ProductTitle = ({ record }) => <span>Poster #{record.reference}</span>;
+const ProductTitle = ({ record }) => <span>Products #{record.reference}</span>;
 
 const styles = {
     ...createStyles,
@@ -37,54 +26,39 @@ const styles = {
 const ProductEdit = ({ classes, ...props }) => (
     <Edit {...props} title={<ProductTitle />}>
         <TabbedForm>
-            <FormTab label="resources.products.tabs.image">
-                <Poster />
-                <TextInput source="image" options={{ fullWidth: true }} />
-                <TextInput source="thumbnail" options={{ fullWidth: true }} />
-            </FormTab>
-            <FormTab label="resources.products.tabs.details" path="details">
-                <TextInput source="reference" />
-                <NumberInput source="price" className={classes.price} />
+            <FormTab label="attributes">
+                <TextInput
+                    source="attributes.name"
+                    label="Name"
+                    validate={required()}
+                />
+                <TextInput
+                    source="attributes.description"
+                    label="Description"
+                    validate={required()}
+                />
                 <NumberInput
-                    source="width"
+                    source="attributes.width"
+                    label="Width"
                     className={classes.width}
                     formClassName={classes.widthFormGroup}
+                    validate={required()}
                 />
                 <NumberInput
-                    source="height"
+                    source="attributes.height"
+                    label="Height"
                     className={classes.height}
                     formClassName={classes.heightFormGroup}
+                    validate={required()}
                 />
-                <ReferenceInput source="category_id" reference="categories">
-                    <SelectInput source="name" />
-                </ReferenceInput>
-                <NumberInput source="stock" className={classes.stock} />
-            </FormTab>
-            <FormTab
-                label="resources.products.tabs.description"
-                path="description"
-            >
-                <RichTextInput source="description" addLabel={false} />
-            </FormTab>
-            <FormTab label="resources.products.tabs.reviews" path="reviews">
-                <ReferenceManyField
-                    reference="reviews"
-                    target="product_id"
-                    addLabel={false}
-                    pagination={<Pagination />}
-                >
-                    <Datagrid>
-                        <DateField source="date" />
-                        <CustomerReferenceField />
-                        <StarRatingField />
-                        <TextField
-                            source="comment"
-                            cellClassName={classes.comment}
-                        />
-                        <TextField source="status" />
-                        <EditButton />
-                    </Datagrid>
-                </ReferenceManyField>
+
+                <NumberInput
+                    source="attributes.length"
+                    label="Length"
+                    className={classes.height}
+                    formClassName={classes.heightFormGroup}
+                    validate={required()}
+                />
             </FormTab>
         </TabbedForm>
     </Edit>

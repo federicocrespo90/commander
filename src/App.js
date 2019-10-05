@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Admin, Resource } from 'react-admin';
+import { Admin, Resource, fetchUtils } from 'react-admin';
 
 import './App.css';
 
@@ -7,19 +7,10 @@ import authProvider from './authProvider';
 import sagas from './sagas';
 import themeReducer from './themeReducer';
 import { Login, Layout } from './layout';
-import { Dashboard } from './dashboard';
 import customRoutes from './routes';
 import englishMessages from './i18n/en';
-
-import visitors from './visitors';
-import orders from './orders';
 import products from './products';
-import invoices from './invoices';
-import categories from './categories';
-import reviews from './reviews';
-
-import dataProviderFactory from './dataProvider';
-import fakeServerFactory from './fakeServer';
+import jsonServerProvider from 'ra-data-json-server';
 
 const i18nProvider = locale => {
     if (locale === 'fr') {
@@ -30,20 +21,23 @@ const i18nProvider = locale => {
     return englishMessages;
 };
 
+const httpClient = (url, options = {}) => {
+    if (!options.headers) {
+        options.headers = new Headers({ Accept: 'application/json' });
+    }
+    // add your own headers here
+    const accessToken = localStorage.getItem("access_token") ? localStorage.getItem("access_token") : null; 
+    const tokenType = localStorage.getItem("token_type") ? localStorage.getItem("token_type") : null;
+    options.headers.set('Authorization', `${tokenType} ${accessToken}`);
+
+    return fetchUtils.fetchJson(url, options);
+}
+
 class App extends Component {
     state = { dataProvider: null };
 
-    async componentWillMount() {
-        console.log(orders);
-        debugger;
-        this.restoreFetch = await fakeServerFactory(
-            process.env.REACT_APP_DATA_PROVIDER
-        );
-
-        const dataProvider = await dataProviderFactory(
-            process.env.REACT_APP_DATA_PROVIDER
-        );
-
+    componentWillMount() {
+        const dataProvider = jsonServerProvider('http://localhost:9000', httpClient);
         this.setState({ dataProvider });
     }
 
@@ -64,29 +58,20 @@ class App extends Component {
 
         return (
             <Admin
-                title=""
+                title="Commander"
                 dataProvider={dataProvider}
                 customReducers={{ theme: themeReducer }}
                 customSagas={sagas}
                 customRoutes={customRoutes}
                 authProvider={authProvider}
-                dashboard={Dashboard}
                 loginPage={Login}
                 appLayout={Layout}
                 locale="en"
                 i18nProvider={i18nProvider}
             >
-                <Resource name="customers" {...visitors} />
-                <Resource
-                    name="commands"
-                    {...orders}
-                    options={{ label: 'Orders' }}
-                />
-                <Resource name="invoices" {...invoices} />
                 <Resource name="products" {...products} />
-                <Resource name="categories" {...categories} />
-                <Resource name="reviews" {...reviews} />
             </Admin>
+
         );
     }
 }

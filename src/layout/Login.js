@@ -81,7 +81,7 @@ class Login extends Component {
         this.props.userLogin(
             auth,
             this.props.location.state
-                ? this.props.location.state.nextPathname
+                ? '/products'
                 : '/'
         );
 
@@ -96,7 +96,6 @@ class Login extends Component {
                         </Avatar>
                     </div>
                     <form onSubmit={handleSubmit(this.login)}>
-                        <div className={classes.hint}>Hint: demo / demo</div>
                         <div className={classes.form}>
                             <div className={classes.input}>
                                 <Field

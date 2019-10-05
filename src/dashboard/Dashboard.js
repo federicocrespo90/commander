@@ -40,6 +40,8 @@ class Dashboard extends Component {
 
     async fetchOrders() {
         const { dataProvider } = this.props;
+        console.log(dataProvider);
+        debugger
         const aMonthAgo = new Date();
         aMonthAgo.setDate(aMonthAgo.getDate() - 30);
         const { data: recentOrders } = await dataProvider(

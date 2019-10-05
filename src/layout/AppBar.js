@@ -36,7 +36,6 @@ const CustomAppBar = ({ classes, ...props }) => (
             className={classes.title}
             id="react-admin-title"
         />
-        <Logo />
         <span className={classes.spacer} />
     </AppBar>
 );
